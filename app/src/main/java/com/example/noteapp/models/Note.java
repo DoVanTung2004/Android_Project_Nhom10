@@ -1,28 +1,27 @@
 package com.example.noteapp.models;
 
 public class Note {
+
     private String id;
     private String title;
     private String content;
     private String label;
     private String color;
     private long reminderTime; // Thời gian nhắc ghi chú (milliseconds)
+    private String userId;
 
-    // Bắt buộc có constructor rỗng cho Firestore
-    public Note() {}
+    public Note() {} // Required for Firebase
 
-    // Constructor tùy chọn nếu muốn khởi tạo nhanh
-    public Note(String title, String content, String label, String color, long reminderTime) {
-
+    public Note(String title, String content) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.label = label;
         this.color = color;
         this.reminderTime = reminderTime;
+        this.userId = userId;
     }
 
-    // ID dùng để lưu documentId trong Firestore
     public String getId() {
         return id;
     }
@@ -41,6 +40,12 @@ public class Note {
 
     public String getContent() {
         return content;
+    }
+    public String getUserId() {
+        return userId;
+    }
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public void setContent(String content) {
