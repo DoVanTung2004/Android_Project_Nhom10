@@ -5,6 +5,7 @@ public class Note {
     private String id;
     private String title;
     private String content;
+    private String userId;
 
     public Note() {} // Required for Firebase
 
@@ -12,6 +13,7 @@ public class Note {
         this.id = id;
         this.title = title;
         this.content = content;
+        this.userId = userId;
     }
 
     public String getId() {
@@ -27,5 +29,11 @@ public class Note {
 
     public String getContent() {
         return content;
+    }
+    public String getUserId() {
+        return userId;
+    }
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

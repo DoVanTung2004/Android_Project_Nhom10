@@ -37,5 +37,7 @@
         <activity android:name=".HomeActivity"
             android:exported="true" />
         <activity android:name=".AddNoteActivity" />
+        <activity android:name=".EditNoteActivity" />
+
     </application>
 </manifest>
