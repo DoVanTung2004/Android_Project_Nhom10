@@ -17,6 +17,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.List;
 
 public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder> {
+
     private List<Note> noteList;
     private OnNoteActionListener listener;
     private FirebaseFirestore db;
@@ -30,7 +31,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
     public NoteAdapter(List<Note> noteList, OnNoteActionListener listener) {
         this.noteList = noteList;
         this.listener = listener;
-        db = FirebaseFirestore.getInstance();
+        this.db = FirebaseFirestore.getInstance();
     }
 
     @NonNull
@@ -48,11 +49,11 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
         holder.tvContent.setText(note.getContent());
         holder.tvLabel.setText(note.getLabel());
 
-        // Đổi màu nền theo color
+        // Đổi màu nền ghi chú nếu có color
         try {
             holder.itemView.setBackgroundColor(Color.parseColor(note.getColor()));
         } catch (Exception e) {
-            holder.itemView.setBackgroundColor(Color.WHITE); // fallback
+            holder.itemView.setBackgroundColor(Color.WHITE);
         }
 
         holder.btnMore.setOnClickListener(v -> {
@@ -69,15 +70,21 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
                 } else if (id == R.id.menu_pin) {
                     pinNoteAtPosition(holder.getAdapterPosition());
                     return true;
-                } else {
-                    return false;
                 }
+                return false;
             });
             popupMenu.show();
         });
     }
 
+    @Override
+    public int getItemCount() {
+        return noteList.size();
+    }
+
     private void deleteNoteAtPosition(int position) {
+        if (position < 0 || position >= noteList.size()) return;
+
         Note noteToDelete = noteList.get(position);
         db.collection("notes")
                 .document(noteToDelete.getId())
@@ -91,17 +98,14 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
 
     private void pinNoteAtPosition(int position) {
         if (position < 0 || position >= noteList.size()) return;
+
         Note noteToPin = noteList.remove(position);
         noteList.add(0, noteToPin);
         notifyItemMoved(position, 0);
         if (listener != null) listener.onPin(noteToPin);
     }
 
-    @Override
-    public int getItemCount() {
-        return noteList.size();
-    }
-
+    // ✅ ViewHolder đầy đủ
     public static class NoteViewHolder extends RecyclerView.ViewHolder {
         TextView tvTitle, tvContent, tvLabel;
         ImageButton btnMore;

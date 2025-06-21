@@ -52,6 +52,6 @@
             android:background="?android:attr/windowBackground"
             app:menu="@menu/button_nav_menu" />
     </LinearLayout>
-    android:layout_height="match_parent">
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

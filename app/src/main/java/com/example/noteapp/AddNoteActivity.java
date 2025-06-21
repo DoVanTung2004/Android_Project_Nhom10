@@ -6,8 +6,12 @@ import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 import android.widget.*;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.noteapp.models.Note;
@@ -24,7 +28,6 @@ public class AddNoteActivity extends AppCompatActivity {
     private Button btnSave, btnReminder;
     private long selectedReminderTime = 0;
     private CheckBox checkboxPrivate;
-
     private FirebaseFirestore db;
 
     @Override

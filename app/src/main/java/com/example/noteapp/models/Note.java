@@ -13,6 +13,8 @@ public class Note {
 
     // Constructor tùy chọn nếu muốn khởi tạo nhanh
     public Note(String title, String content, String label, String color, long reminderTime) {
+
+        this.id = id;
         this.title = title;
         this.content = content;
         this.label = label;
