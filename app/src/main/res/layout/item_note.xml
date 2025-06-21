@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="12dp"
+    android:layout_margin="8dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FFFFFF"
+    android:elevation="4dp"
+    android:layout_gravity="center"
+    android:id="@+id/noteItemLayout">
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:text="Tiêu đề"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/tvContent"
+        android:text="Nội dung"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp" />
+
+    <TextView
+        android:id="@+id/tvLabel"
+        android:text="Nhãn"
+        android:textStyle="italic"
+        android:textColor="#555555"
+        android:layout_marginTop="6dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <ImageButton
+        android:id="@+id/btnMore"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="end"
+        android:background="?android:selectableItemBackgroundBorderless"
+        android:src="@android:drawable/ic_menu_more"
+        android:contentDescription="@string/more_options" />
+</LinearLayout>
