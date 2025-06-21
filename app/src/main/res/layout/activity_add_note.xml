@@ -32,12 +32,7 @@
             android:layout_height="wrap_content"
             android:minLines="5" />
 
-        <Button
-            android:id="@+id/btnSave"
-            android:text="Lưu"
-            android:layout_marginTop="12dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+
         <Spinner
             android:id="@+id/spinnerLabel"
             android:layout_width="match_parent"
@@ -65,7 +60,12 @@
             android:layout_height="wrap_content"
             android:text="Đánh dấu là riêng tư"
             android:layout_marginTop="12dp"/>
-
+        <Button
+            android:id="@+id/btnSave"
+            android:text="Lưu"
+            android:layout_marginTop="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,17 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.noteapp">
 
-    <!-- Quyền truy cập đa phương tiện (nếu bạn cần lưu/truy xuất ảnh, âm thanh...) -->
-    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
-    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO"/>
-    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO"/>
-    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"/> <!-- ⏰ Đặt giờ chính xác -->
+    <!-- Quyền truy cập đa phương tiện -->
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
+    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
 
     <!-- Nếu hỗ trợ Android < 13 -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
-        android:maxSdkVersion="32"/>
+        android:maxSdkVersion="32" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        android:maxSdkVersion="28"/>
+        android:maxSdkVersion="28" />
 
     <application
         android:allowBackup="true"
@@ -26,16 +26,14 @@
         android:theme="@style/Theme.NoteApp"
         tools:targetApi="31">
 
-        <!-- Launcher activity -->
-        <activity android:name=".MainActivity"/>
-
-        <!-- Các activity trong app -->
+        <activity android:name=".MainActivity" android:exported="true" />
         <activity android:name=".HomeActivity" android:exported="true" />
         <activity android:name=".AddNoteActivity" android:exported="true" />
         <activity android:name=".EditNoteActivity" android:exported="true" tools:node="merge" />
 
-        <!-- Receiver để nhận lời nhắc và hiện thông báo -->
-        <receiver android:name="com.example.noteapp.models.ReminderReceiver" android:exported="false" />
+        <!-- Receiver để nhận lời nhắc -->
+        <receiver android:name="com.example.noteapp.models.ReminderReceiver"
+            android:exported="false" />
 
         <activity android:name=".models.PinActivity" android:exported="true">
             <intent-filter>
@@ -43,8 +41,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
 
     </application>
 </manifest>
