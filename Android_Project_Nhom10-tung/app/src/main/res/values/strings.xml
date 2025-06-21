@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">NoteApp</string>
+    <string name="note_list_description">Danh sách ghi chú</string>
+    <string-array name="label_options">
+        <item>Công việc</item>
+        <item>Cá nhân</item>
+        <item>Ý tưởng</item>
+    </string-array>
+
+    <string-array name="color_options">
+        <item>Hồng</item>
+        <item>Vàng</item>
+        <item>Xanh</item>
+    </string-array>
+
+</resources>

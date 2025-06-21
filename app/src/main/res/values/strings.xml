@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">NoteApp</string>
+    <string name="note_list_description">Danh sách ghi chú</string>
+    <string name="more_options">More options</string>
+    <string name="title">Tiêu đề</string>
+    <string name="content">Nội dung</string>
+    <string name="completed">Đã hoàn thành</string>
+    <string name="attach_image">Đính kèm ảnh</string>
+    <string name="share_note">Chia sẻ ghi chú</string>
+
+
+
+</resources>
