@@ -46,7 +46,6 @@ public class HomeActivity extends AppCompatActivity implements NoteAdapter.OnNot
             Toast.makeText(this, "Chào mừng " + email, Toast.LENGTH_LONG).show();
         }
         auth = FirebaseAuth.getInstance();
-
         btnAdd = findViewById(R.id.btn_add);
         recyclerView = findViewById(R.id.recyclerView);
         searchView = findViewById(R.id.searchView);
@@ -123,13 +122,10 @@ public class HomeActivity extends AppCompatActivity implements NoteAdapter.OnNot
                     for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
                         Note note = doc.toObject(Note.class);
                         note.setId(doc.getId());
-
                         // Lọc ghi chú KHÔNG riêng tư
                         if (!note.isPrivate()) {
                             noteList.add(note);
                         }
-                        note.setId(doc.getId());
-                        noteList.add(note);
                     }
                     adapter.notifyDataSetChanged();
                 })
@@ -149,8 +145,6 @@ public class HomeActivity extends AppCompatActivity implements NoteAdapter.OnNot
         adapter = new NoteAdapter(filteredList, this);
         recyclerView.setAdapter(adapter);
     }
-
-
 
     @Override
     public void onDelete(Note note) {
