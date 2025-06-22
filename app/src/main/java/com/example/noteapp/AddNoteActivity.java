@@ -7,53 +7,59 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
-import android.widget.*;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.noteapp.models.Note;
+import com.example.noteapp.models.ReminderReceiver;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-
 import java.util.Calendar;
-import com.example.noteapp.models.ReminderReceiver;
 
 public class AddNoteActivity extends AppCompatActivity {
 
     private EditText etTitle, etContent;
     private Spinner spinnerLabel, spinnerColor;
     private Button btnSave, btnReminder;
-    private long selectedReminderTime = 0;
     private CheckBox checkboxPrivate;
+    private long selectedReminderTime = 0;
+
     private FirebaseFirestore db;
+    private FirebaseAuth auth;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_note);
 
+        // Ánh xạ view
         etTitle = findViewById(R.id.etTitle);
         etContent = findViewById(R.id.etContent);
         spinnerLabel = findViewById(R.id.spinnerLabel);
         spinnerColor = findViewById(R.id.spinnerColor);
         btnSave = findViewById(R.id.btnSave);
         btnReminder = findViewById(R.id.btnReminder);
+        checkboxPrivate = findViewById(R.id.checkboxPrivate);
 
         db = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
 
-        // Kiểm tra nếu chưa đăng nhập thì quay lại MainActivity
+        // Kiểm tra người dùng đã đăng nhập chưa
         if (auth.getCurrentUser() == null) {
             Toast.makeText(this, "Bạn chưa đăng nhập", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this, MainActivity.class));
             finish();
             return;
         }
+
+        // Bottom navigation
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
@@ -71,10 +77,9 @@ public class AddNoteActivity extends AppCompatActivity {
             return false;
         });
 
+        // Xử lý click
         btnReminder.setOnClickListener(v -> showDateTimePicker());
         btnSave.setOnClickListener(v -> saveNote());
-        checkboxPrivate = findViewById(R.id.checkboxPrivate);
-
     }
 
     private void showDateTimePicker() {
@@ -94,63 +99,41 @@ public class AddNoteActivity extends AppCompatActivity {
         String label = spinnerLabel.getSelectedItem().toString();
         String colorName = spinnerColor.getSelectedItem().toString();
 
-        // Gán mã màu dựa vào tên màu
+        if (title.isEmpty() || content.isEmpty()) {
+            Toast.makeText(this, "Vui lòng nhập tiêu đề và nội dung", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Gán mã màu theo tên
         String colorHex = "#FFFFFF"; // mặc định trắng
         switch (colorName) {
             case "Hồng": colorHex = "#F8BBD0"; break;
             case "Vàng": colorHex = "#FFF59D"; break;
             case "Xanh": colorHex = "#B2EBF2"; break;
         }
-        btnSave.setOnClickListener(view -> {
-            String title = etTitle.getText().toString().trim();
-            String content = etContent.getText().toString().trim();
 
-            if (title.isEmpty() || content.isEmpty()) {
-                Toast.makeText(this, "Không được để trống", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            // Lấy userId và documentId để gán vào note
-            String userId = auth.getCurrentUser().getUid();
-            String noteId = db.collection("notes").document().getId();
-
-            // Tạo đối tượng Note
-            Note note = new Note(title, content);
-            note.setId(noteId);         // gán document ID
-            note.setUserId(userId);     // gán user đang đăng nhập
-
-            // Lưu vào Firestore
-            db.collection("notes")
-                    .document(noteId)
-                    .set(note)
-                    .addOnSuccessListener(unused -> {
-                        Toast.makeText(this, "Đã lưu ghi chú", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(this, HomeActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                        startActivity(intent);
-                        finish();
-                    })
-                    .addOnFailureListener(e -> {
-                        Toast.makeText(this, "Lỗi: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    });
-        });
-        if (title.isEmpty() || content.isEmpty()) {
-            Toast.makeText(this, "Vui lòng nhập tiêu đề và nội dung", Toast.LENGTH_SHORT).show();
-            return;
-        }
         boolean isPrivate = checkboxPrivate.isChecked();
-        // Tạo object Note và lưu vào Firestore
+        String userId = auth.getCurrentUser().getUid();
+        String noteId = db.collection("notes").document().getId();
+
         Note note = new Note(title, content, label, colorHex, selectedReminderTime, isPrivate);
+        note.setId(noteId);
+        note.setUserId(userId);
+
         db.collection("notes")
-                .add(note)
-                .addOnSuccessListener(docRef -> {
+                .document(noteId)
+                .set(note)
+                .addOnSuccessListener(unused -> {
                     Toast.makeText(this, "Ghi chú đã lưu", Toast.LENGTH_SHORT).show();
                     if (selectedReminderTime > 0) {
                         scheduleReminder(note, selectedReminderTime);
                     }
+                    startActivity(new Intent(this, HomeActivity.class));
                     finish();
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(this, "Lỗi: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
-
     }
 
     private void scheduleReminder(Note note, long timeInMillis) {
@@ -167,6 +150,7 @@ public class AddNoteActivity extends AppCompatActivity {
 
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         if (alarmManager != null) {
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, timeInMillis, pendingIntent);
         }
     }
 }

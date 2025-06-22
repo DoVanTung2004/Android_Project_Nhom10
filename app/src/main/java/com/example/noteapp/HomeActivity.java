@@ -45,6 +45,7 @@ public class HomeActivity extends AppCompatActivity implements NoteAdapter.OnNot
         if (email != null && !email.isEmpty()) {
             Toast.makeText(this, "Chào mừng " + email, Toast.LENGTH_LONG).show();
         }
+        auth = FirebaseAuth.getInstance();
 
         btnAdd = findViewById(R.id.btn_add);
         recyclerView = findViewById(R.id.recyclerView);
@@ -109,12 +110,6 @@ public class HomeActivity extends AppCompatActivity implements NoteAdapter.OnNot
         if (requestCode == REQUEST_CODE_ADD_NOTE && resultCode == RESULT_OK) {
             loadNotes();
         }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        loadNotes();
     }
 
     private void loadNotes() {
