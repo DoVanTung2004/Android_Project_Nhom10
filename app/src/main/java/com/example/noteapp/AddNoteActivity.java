@@ -39,7 +39,7 @@ public class AddNoteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_note);
 
-        // Ánh xạ view
+        // Ánh xạ View
         etTitle = findViewById(R.id.etTitle);
         etContent = findViewById(R.id.etContent);
         spinnerLabel = findViewById(R.id.spinnerLabel);
@@ -51,7 +51,7 @@ public class AddNoteActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
 
-        // Kiểm tra người dùng đã đăng nhập chưa
+        // Kiểm tra đăng nhập
         if (auth.getCurrentUser() == null) {
             Toast.makeText(this, "Bạn chưa đăng nhập", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this, MainActivity.class));
@@ -59,7 +59,7 @@ public class AddNoteActivity extends AppCompatActivity {
             return;
         }
 
-        // Bottom navigation
+        // Navigation dưới
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
@@ -77,7 +77,6 @@ public class AddNoteActivity extends AppCompatActivity {
             return false;
         });
 
-        // Xử lý click
         btnReminder.setOnClickListener(v -> showDateTimePicker());
         btnSave.setOnClickListener(v -> saveNote());
     }
@@ -104,19 +103,26 @@ public class AddNoteActivity extends AppCompatActivity {
             return;
         }
 
-        // Gán mã màu theo tên
-        String colorHex = "#FFFFFF"; // mặc định trắng
+        // Đổi tên màu thành mã màu hex
+        String colorHex = "#FFFFFF"; // mặc định
         switch (colorName) {
-            case "Hồng": colorHex = "#F8BBD0"; break;
-            case "Vàng": colorHex = "#FFF59D"; break;
-            case "Xanh": colorHex = "#B2EBF2"; break;
+            case "Hồng":
+                colorHex = "#F8BBD0";
+                break;
+            case "Vàng":
+                colorHex = "#FFF59D";
+                break;
+            case "Xanh":
+                colorHex = "#B2EBF2";
+                break;
         }
 
         boolean isPrivate = checkboxPrivate.isChecked();
         String userId = auth.getCurrentUser().getUid();
         String noteId = db.collection("notes").document().getId();
 
-        Note note = new Note(title, content, label, colorHex, selectedReminderTime, isPrivate);
+        // ✅ Ghi chú mặc định chưa hoàn thành (done = false)
+        Note note = new Note(title, content, label, colorHex, selectedReminderTime, isPrivate, false);
         note.setId(noteId);
         note.setUserId(userId);
 

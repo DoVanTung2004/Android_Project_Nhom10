@@ -9,4 +9,7 @@
     <item
         android:id="@+id/menu_pin"
         android:title="Gắn lên đầu" />
+    <item
+        android:id="@+id/menu_share"
+        android:title="Chia sẻ" />
 </menu>

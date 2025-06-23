@@ -1,72 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:padding="16dp"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    android:background="#121212"
+    tools:context=".AddNoteActivity">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#6200EE"
-            app:title="NOTE Pro"
-            app:titleTextColor="@android:color/white" />
-        <EditText
-            android:id="@+id/etTitle"
-            android:hint="Tiêu đề"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="48dp"/>
+    <!-- Toolbar -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="#6200EE"
+        app:title="📝 Thêm ghi chú mới"
+        app:titleTextColor="@android:color/white"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-        <EditText
-            android:id="@+id/etContent"
-            android:hint="Nội dung"
-            android:layout_marginTop="8dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minLines="5" />
+    <!-- Tiêu đề -->
+    <EditText
+        android:id="@+id/etTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="Tiêu đề"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#BBBBBB"
+        android:backgroundTint="#333333"
+        android:background="@android:color/transparent"
+        android:textSize="18sp"
+        android:padding="12dp"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
+    <!-- Nội dung -->
+    <EditText
+        android:id="@+id/etContent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:hint="Nội dung"
+        android:minLines="5"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#BBBBBB"
+        android:backgroundTint="#333333"
+        android:background="@android:color/transparent"
+        android:gravity="top"
+        android:padding="12dp"
+        app:layout_constraintTop_toBottomOf="@id/etTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-        <Spinner
-            android:id="@+id/spinnerLabel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:entries="@array/label_options"
-            android:layout_marginTop="12dp"
-            android:minHeight="48dp" />
+    <!-- Nhãn -->
+    <Spinner
+        android:id="@+id/spinnerLabel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:backgroundTint="#333333"
+        android:popupBackground="#333333"
+        android:spinnerMode="dropdown"
+        app:layout_constraintTop_toBottomOf="@id/etContent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:entries="@array/label_options" />
 
-        <Spinner
-            android:id="@+id/spinnerColor"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:entries="@array/color_options"
-            android:layout_marginTop="12dp"
-            android:minHeight="48dp"/>
-        <Button
-            android:id="@+id/btnReminder"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Chọn thời gian nhắc"
-            android:layout_marginTop="12dp" />
-        <CheckBox
-            android:id="@+id/checkboxPrivate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Đánh dấu là riêng tư"
-            android:layout_marginTop="12dp"/>
-        <Button
-            android:id="@+id/btnSave"
-            android:text="Lưu"
-            android:layout_marginTop="12dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+    <!-- Màu -->
+    <Spinner
+        android:id="@+id/spinnerColor"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:backgroundTint="#333333"
+        android:popupBackground="#333333"
+        android:spinnerMode="dropdown"
+        app:layout_constraintTop_toBottomOf="@id/spinnerLabel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:entries="@array/color_options" />
+
+    <!-- Nhắc giờ -->
+    <Button
+        android:id="@+id/btnReminder"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#03DAC5"
+        android:text="⏰ Chọn thời gian nhắc"
+        android:textAllCaps="false"
+        android:textColor="#000000"
+        android:drawableStart="@android:drawable/ic_lock_idle_alarm"
+        android:drawablePadding="8dp"
+        app:layout_constraintTop_toBottomOf="@id/spinnerColor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- CheckBox riêng tư -->
+    <CheckBox
+        android:id="@+id/checkboxPrivate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="🔒 Ghi chú riêng tư"
+        android:textColor="#FFFFFF"
+        app:layout_constraintTop_toBottomOf="@id/btnReminder"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- Nút lưu -->
+    <Button
+        android:id="@+id/btnSave"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#9C27B0"
+        android:text="💾 Lưu ghi chú"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        android:drawableStart="@android:drawable/ic_menu_save"
+        android:drawablePadding="8dp"
+        app:layout_constraintTop_toBottomOf="@id/checkboxPrivate"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Thanh điều hướng dưới -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="0dp"

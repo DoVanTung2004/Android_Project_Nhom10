@@ -9,19 +9,31 @@ public class Note {
     private String color;
     private long reminderTime; // Thời gian nhắc ghi chú (milliseconds)
     private String userId;
+    private boolean isPrivate;
+    private boolean done;
 
-    public Note() {} // Required for Firebase
+    public Note() {
+        // Constructor rỗng cần thiết cho Firebase
+    }
 
+    // Constructor cơ bản
     public Note(String title, String content) {
-        this.id = id;
+        this.title = title;
+        this.content = content;
+    }
+
+    // Constructor đầy đủ
+    public Note(String title, String content, String label, String color, long reminderTime, boolean isPrivate, boolean done) {
         this.title = title;
         this.content = content;
         this.label = label;
         this.color = color;
         this.reminderTime = reminderTime;
-        this.userId = userId;
+        this.isPrivate = isPrivate;
+        this.done = done;
     }
 
+    // --- Getter & Setter ---
     public String getId() {
         return id;
     }
@@ -40,12 +52,6 @@ public class Note {
 
     public String getContent() {
         return content;
-    }
-    public String getUserId() {
-        return userId;
-    }
-    public void setUserId(String userId) {
-        this.userId = userId;
     }
 
     public void setContent(String content) {
@@ -75,20 +81,28 @@ public class Note {
     public void setReminderTime(long reminderTime) {
         this.reminderTime = reminderTime;
     }
-    private boolean isPrivate;
 
+    public String getUserId() {
+        return userId;
+    }
 
-    public Note(String title, String content, String label, String color, long reminderTime, boolean isPrivate) {
-        this.title = title;
-        this.content = content;
-        this.label = label;
-        this.color = color;
-        this.reminderTime = reminderTime;
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public boolean isPrivate() {
+        return isPrivate;
+    }
+
+    public void setPrivate(boolean isPrivate) {
         this.isPrivate = isPrivate;
     }
 
-    // Getter Setter
-    public boolean isPrivate() { return isPrivate; }
-    public void setPrivate(boolean isPrivate) { this.isPrivate = isPrivate; }
+    public boolean isDone() {
+        return done;
+    }
 
+    public void setDone(boolean done) {
+        this.done = done;
+    }
 }
